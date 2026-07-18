@@ -34,13 +34,18 @@
     const loading = document.getElementById("payout-loading");
     try {
       me = await window.EarnCordApp.loadMe();
-      const available = Number(me.balanceAvailableCents || 0);
+      const available = me.balanceAvailableCents;
+      const linked = me.linked ?? me.checklist?.linked;
+      const canWithdraw = linked && available != null;
       const minimum = limit(me, ["minWithdrawCents", "withdrawalMinCents", "minimumWithdrawalCents", "minWithdrawalCents"]);
       const daily = limit(me, ["dailyCapCents", "dailyWithdrawalLimitCents", "dailyLimitCents", "withdrawalDailyCapCents"]);
       const withdrawn = me.dailyWithdrawnCents;
       document.getElementById("payout-stats").innerHTML = `<div class="docs-block hub-stat-card"><strong>Available balance</strong><span class="hub-stat-value">${window.EarnCordApp.formatCents(available)}</span></div>${minimum != null ? `<div class="docs-block"><strong>Minimum withdrawal</strong><span>${window.EarnCordApp.formatCents(minimum)}</span></div>` : ""}${daily != null ? `<div class="docs-block"><strong>Daily limit</strong><span>${window.EarnCordApp.formatCents(daily)}${withdrawn != null ? ` · ${window.EarnCordApp.formatCents(withdrawn)} used` : ""}</span></div>` : ""}`;
       const input = document.getElementById("withdraw-amount");
-      if (minimum == null || available >= minimum) input.value = (available / 100).toFixed(2);
+      const submit = document.getElementById("withdraw-submit");
+      if (canWithdraw && minimum != null && available >= minimum) input.value = (available / 100).toFixed(2);
+      input.disabled = !canWithdraw;
+      submit.disabled = !canWithdraw;
       const historyRes = await window.EarnCordApp.apiFetch("/api/web/history?limit=50");
       if (historyRes.ok) renderWithdrawals(await historyRes.json());
       else renderWithdrawals([]);
@@ -59,6 +64,8 @@
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("withdraw-form").addEventListener("submit", async (event) => {
       event.preventDefault();
+      if (!me || me.balanceAvailableCents == null) return setStatus("Available balance is not ready yet.", "is-error");
+      if (!(me.linked ?? me.checklist?.linked)) return setStatus(messages.NOT_LINKED, "is-error");
       const amountCents = cents(document.getElementById("withdraw-amount").value);
       if (!Number.isSafeInteger(amountCents) || amountCents < 1) return setStatus(messages.INVALID_AMOUNT, "is-error");
       if (!window.confirm(`Withdraw ${window.EarnCordApp.formatCents(amountCents)} to your saved USDT TRC20 wallet?`)) return;

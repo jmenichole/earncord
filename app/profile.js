@@ -2,12 +2,13 @@
   const esc = (value) => String(value ?? "—").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
   function avatar(me) {
-    const user = me.user || me;
-    if (user.avatarUrl) return user.avatarUrl;
-    if (user.avatar && user.id) return `https://cdn.discordapp.com/avatars/${encodeURIComponent(user.id)}/${encodeURIComponent(user.avatar)}.png?size=128`;
+    if (me.avatarUrl) return me.avatarUrl;
+    const discordId = me.discordId;
+    const avatarHash = me.avatar ?? (me.user || {}).avatar;
+    if (avatarHash && discordId) return `https://cdn.discordapp.com/avatars/${encodeURIComponent(discordId)}/${encodeURIComponent(avatarHash)}.png?size=128`;
     let index = 0;
     try {
-      index = Number(BigInt(String(user.id || 0)) >> 22n) % 6;
+      index = Number(BigInt(String(discordId || 0)) >> 22n) % 6;
     } catch {
       index = 0;
     }
@@ -21,9 +22,9 @@
       const me = await window.EarnCordApp.loadMe();
       const user = me.user || me;
       const name = user.globalName || user.displayName || user.username || me.name || "EarnCord member";
-      const id = user.id || me.discordId || me.id;
+      const discordId = me.discordId;
       const linked = me.linked ?? me.checklist?.linked;
-      content.innerHTML = `<h1 class="hub-title">Profile</h1><p class="hub-lede">Your EarnCord identity and progress.</p><div class="docs-block hub-profile-head"><img class="account-avatar hub-profile-avatar" src="${esc(avatar(user))}" alt="" /><div><strong>${esc(name)}</strong><p>Discord ID · ${esc(id)}</p></div><span class="hub-badge${linked ? " is-linked" : ""}">${linked ? "Linked" : "Not linked"}</span></div><div class="docs-blocks"><div class="docs-block hub-stat-card"><strong>Score</strong><span class="hub-stat-value">${esc(me.score)}</span></div><div class="docs-block hub-stat-card"><strong>Tier</strong><span class="hub-stat-value">${esc(me.tier)}</span></div></div>`;
+      content.innerHTML = `<h1 class="hub-title">Profile</h1><p class="hub-lede">Your EarnCord identity and progress.</p><div class="docs-block hub-profile-head"><img class="account-avatar hub-profile-avatar" src="${esc(avatar(me))}" alt="" /><div><strong>${esc(name)}</strong><p>Discord ID · ${esc(discordId)}</p></div><span class="hub-badge${linked ? " is-linked" : ""}">${linked ? "Linked" : "Not linked"}</span></div><div class="docs-blocks"><div class="docs-block hub-stat-card"><strong>Score</strong><span class="hub-stat-value">${esc(me.score)}</span></div><div class="docs-block hub-stat-card"><strong>Tier</strong><span class="hub-stat-value">${esc(me.tier)}</span></div></div>`;
       loading.remove();
       content.hidden = false;
     } catch (error) {
