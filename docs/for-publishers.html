@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>For publishers — EarnCord Docs</title>
+  <meta name="description" content="EarnCord publisher overview for TheoremReach and partner reviewers." />
+  <link rel="icon" href="../mark.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../earncord-mark-1024.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="EarnCord">
+      <a class="rail-brand" href="../index.html" aria-label="EarnCord home">
+        <svg class="rail-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#0f121a"/>
+          <path fill="#e8ebf2" d="M9 8h9v3h-6v3h5v3h-5v3h6v3H9z"/>
+          <path fill="none" stroke="#5ef2a8" stroke-width="2.75" stroke-linecap="round" d="M19 8.5c5.2 0 8.5 3.2 8.5 7.5S24.2 23.5 19 23.5"/>
+        </svg>
+        <span class="full">Earn<em>Cord</em></span>
+        <span class="short">E<em>C</em></span>
+      </a>
+      <nav class="rail-nav">
+        <a href="../index.html"><span class="hash">#</span><span class="label">home</span></a>
+        <a href="index.html"><span class="hash">#</span><span class="label">docs</span></a>
+      </nav>
+      <p class="rail-footer">Independent product.<br />Not affiliated with Discord.</p>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-title"><span class="hash">#</span> docs / for-publishers</div>
+        <div class="topbar-meta">partner review</div>
+      </header>
+
+      <nav class="docs-toc" aria-label="Docs pages">
+        <a href="index.html">Hub</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="surveyscore.html">SurveyScore</a>
+        <a href="for-publishers.html" aria-current="page">For publishers</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+
+      <main class="docs-main page-wrap">
+        <p class="docs-kicker">Partner-facing</p>
+        <h1>For publishers &amp; reviewers</h1>
+        <p class="docs-lede">
+          Short overview for TheoremReach, CPX, Pollfish, and similar review teams evaluating
+          EarnCord as a Discord-native survey panel.
+        </p>
+
+        <h2>Product summary</h2>
+        <p>
+          EarnCord matches Discord community members to paid survey inventory. Members consent on the
+          public website, complete profile onboarding in Discord, and receive survey opportunities
+          through the bot. Rewards credit only after server-to-server postbacks from the survey partner.
+          Payouts to members are in USDT via a crypto payment provider.
+        </p>
+
+        <h2>Website &amp; compliance URLs</h2>
+        <ul>
+          <li>App / marketing: <a href="https://jmenichole.github.io/earncord/">https://jmenichole.github.io/earncord/</a></li>
+          <li>Privacy: <a href="https://jmenichole.github.io/earncord/privacy.html">privacy.html</a></li>
+          <li>Terms: <a href="https://jmenichole.github.io/earncord/terms.html">terms.html</a></li>
+          <li>Docs hub: <a href="https://jmenichole.github.io/earncord/docs/">docs/</a></li>
+        </ul>
+        <p>Use these URLs on the publisher application. Contact: <a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a>.</p>
+
+        <h2>Age gate &amp; consent</h2>
+        <ul>
+          <li><strong>18+</strong> — required checkbox before Discord OAuth; Terms and Privacy also require active acceptance.</li>
+          <li>Web registration ties Discord identity to that consent before survey matching begins.</li>
+          <li>We do not knowingly collect data from anyone under 18 (see Privacy Policy).</li>
+        </ul>
+
+        <h2>Discord-native panel</h2>
+        <ul>
+          <li>Members live in Discord servers where the EarnCord bot is installed.</li>
+          <li>Onboarding via <code>/start</code> collects age range, gender, country, and interests for matching.</li>
+          <li>Survey offers surface in Discord; completion happens on the partner’s survey experience.</li>
+          <li>EarnCord is independent software using Discord’s platform APIs — <strong>not</strong> a Discord Inc. product.</li>
+        </ul>
+
+        <h2>Server-to-server postbacks</h2>
+        <p>
+          Completes and screen-outs are reconciled through partner callbacks (hash/HMAC verification
+          where the partner supports it). Member balances update from verified events, not from
+          client-side “I finished” claims. Exact callback paths and secrets are configured in the
+          SurveyScore backend at deploy time — not published on this site.
+        </p>
+
+        <h2>Quality scoring</h2>
+        <p>
+          EarnCord runs an internal <a href="surveyscore.html">SurveyScore</a> (0–1000) from completion rate,
+          screen-out rate, profile completeness, tenure, and recent consistency. Higher tiers can
+          influence matching priority and payout share rules. This is a publisher-side quality signal,
+          not a guarantee of respondent volume or CPI.
+        </p>
+
+        <h2>Technical stack (high level)</h2>
+        <ul>
+          <li>Static site (GitHub Pages) + Cloudflare Worker for Discord OAuth</li>
+          <li>SurveyScore API + Discord bot (Node) for ledger, matching, and postbacks</li>
+          <li>PostgreSQL for accounts, survey history, and withdrawals</li>
+        </ul>
+        <p>
+          Operator deploy details: <a href="https://github.com/jmenichole/surveyscore">github.com/jmenichole/surveyscore</a>
+          and <a href="https://github.com/jmenichole/earncord">github.com/jmenichole/earncord</a>.
+        </p>
+
+        <p class="docs-next">Next: <a href="faq.html">FAQ →</a></p>
+      </main>
+
+      <footer class="site-footer">
+        <p class="footer-degen"><a href="https://github.com/jmenichole/Portfolio" target="_blank" rel="noopener">Made for degens, by degens ♥</a></p>
+        <p><a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a></p>
+        <p><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="index.html">Docs</a></p>
+        <p>Not affiliated with, endorsed by, or sponsored by Discord Inc.</p>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

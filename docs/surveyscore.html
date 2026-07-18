@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SurveyScore — EarnCord Docs</title>
+  <meta name="description" content="EarnCord SurveyScore: 0–1000 factors, weights, and tiers." />
+  <link rel="icon" href="../mark.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../earncord-mark-1024.png" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="EarnCord">
+      <a class="rail-brand" href="../index.html" aria-label="EarnCord home">
+        <svg class="rail-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#0f121a"/>
+          <path fill="#e8ebf2" d="M9 8h9v3h-6v3h5v3h-5v3h6v3H9z"/>
+          <path fill="none" stroke="#5ef2a8" stroke-width="2.75" stroke-linecap="round" d="M19 8.5c5.2 0 8.5 3.2 8.5 7.5S24.2 23.5 19 23.5"/>
+        </svg>
+        <span class="full">Earn<em>Cord</em></span>
+        <span class="short">E<em>C</em></span>
+      </a>
+      <nav class="rail-nav">
+        <a href="../index.html"><span class="hash">#</span><span class="label">home</span></a>
+        <a href="index.html"><span class="hash">#</span><span class="label">docs</span></a>
+      </nav>
+      <p class="rail-footer">Independent product.<br />Not affiliated with Discord.</p>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-title"><span class="hash">#</span> docs / surveyscore</div>
+        <div class="topbar-meta">quality 0–1000</div>
+      </header>
+
+      <nav class="docs-toc" aria-label="Docs pages">
+        <a href="index.html">Hub</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="surveyscore.html" aria-current="page">SurveyScore</a>
+        <a href="for-publishers.html">For publishers</a>
+        <a href="faq.html">FAQ</a>
+      </nav>
+
+      <main class="docs-main page-wrap">
+        <p class="docs-kicker">Quality engine</p>
+        <h1>SurveyScore</h1>
+        <p class="docs-lede">
+          Every member gets a public-facing score from <strong>0 to 1000</strong>. It blends completion
+          behavior, screen-outs, profile depth, tenure, and recent consistency — so partners get a
+          clearer panel and members see why match quality matters.
+        </p>
+
+        <h2>How the number is built</h2>
+        <p>
+          Six factors are computed on a 0–1 scale, weighted, then scaled to 0–1000
+          (rounded). Weights sum to 1.0:
+        </p>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Factor</th>
+              <th>Weight</th>
+              <th>What it measures</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Completion</td>
+              <td>25%</td>
+              <td>Completes ÷ (completes + screen-outs)</td>
+            </tr>
+            <tr>
+              <td>Screen-out</td>
+              <td>20%</td>
+              <td>1 − (screen-outs ÷ attempts) — fewer screens help</td>
+            </tr>
+            <tr>
+              <td>Profile</td>
+              <td>15%</td>
+              <td>Share of age range, gender, country, interests filled in</td>
+            </tr>
+            <tr>
+              <td>Quality</td>
+              <td>15%</td>
+              <td>Currently aligned with completion rate</td>
+            </tr>
+            <tr>
+              <td>Tenure</td>
+              <td>10%</td>
+              <td>Account age, ramping to full weight over ~30 days</td>
+            </tr>
+            <tr>
+              <td>Consistency</td>
+              <td>15%</td>
+              <td>Completes in last 7 days ÷ completes in last 28 days</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Tiers</h2>
+        <table class="docs-table">
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New</td>
+              <td>Below 400</td>
+            </tr>
+            <tr>
+              <td>Bronze</td>
+              <td>400–649</td>
+            </tr>
+            <tr>
+              <td>Silver</td>
+              <td>650–849</td>
+            </tr>
+            <tr>
+              <td>Gold</td>
+              <td>850–1000</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Gold members can receive a small payout bump on credited completes (about +5% on the
+          user share). Tiers do not promise more survey volume or a fixed income.
+        </p>
+
+        <h2>What screen-outs do</h2>
+        <ul>
+          <li>They do <strong>not</strong> add balance — only partner-verified completes credit.</li>
+          <li>They count in the attempt pool, so a high screen-out rate pulls completion and screen-out factors down.</li>
+          <li>Honest demographic answers and finishing when you qualify beat spam-clicking every link.</li>
+        </ul>
+
+        <h2>Repo name vs product name</h2>
+        <p>
+          The open-source backend lives in the <a href="https://github.com/jmenichole/surveyscore">SurveyScore</a>
+          repository. The member-facing brand is <strong>EarnCord</strong>. Same stack — different labels for operators vs users.
+        </p>
+
+        <p class="docs-next">Next: <a href="for-publishers.html">Publisher / reviewer overview →</a></p>
+      </main>
+
+      <footer class="site-footer">
+        <p class="footer-degen"><a href="https://github.com/jmenichole/Portfolio" target="_blank" rel="noopener">Made for degens, by degens ♥</a></p>
+        <p><a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a></p>
+        <p><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="index.html">Docs</a></p>
+        <p>Not affiliated with, endorsed by, or sponsored by Discord Inc.</p>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
