@@ -3,44 +3,102 @@
   const TOKEN_KEY = "earncord_token";
   const CONSENT_KEY = "earncord_consent";
   const OAUTH_STATE_KEY = "earncord_oauth_state";
+  const TOUR_KEY = "earncord_tour_seen";
 
   function cfg() {
     return window.EARNCORD_CONFIG || {};
   }
 
+  function markTourSeen() {
+    localStorage.setItem(TOUR_KEY, "1");
+  }
+
+  function hasTourSeen() {
+    return localStorage.getItem(TOUR_KEY) === "1";
+  }
+
+  function storageGet(key) {
+    try {
+      const local = localStorage.getItem(key);
+      if (local != null) return local;
+      return sessionStorage.getItem(key);
+    } catch {
+      return sessionStorage.getItem(key);
+    }
+  }
+
+  function storageSet(key, value) {
+    localStorage.setItem(key, value);
+    try {
+      sessionStorage.removeItem(key);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function storageRemove(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      /* ignore */
+    }
+    try {
+      sessionStorage.removeItem(key);
+    } catch {
+      /* ignore */
+    }
+  }
+
   function getSession() {
     try {
-      const raw = sessionStorage.getItem(STORAGE_KEY);
+      const raw = storageGet(STORAGE_KEY);
       if (!raw) return null;
       const session = JSON.parse(raw);
       if (!session || !session.id || !session.username) {
-        sessionStorage.removeItem(STORAGE_KEY);
+        storageRemove(STORAGE_KEY);
         return null;
+      }
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        storageSet(STORAGE_KEY, raw);
       }
       return session;
     } catch {
-      sessionStorage.removeItem(STORAGE_KEY);
+      storageRemove(STORAGE_KEY);
       return null;
     }
   }
 
   function setSession(user) {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    storageSet(STORAGE_KEY, JSON.stringify(user));
   }
 
   function getToken() {
-    return sessionStorage.getItem(TOKEN_KEY);
+    const token = storageGet(TOKEN_KEY);
+    if (token && !localStorage.getItem(TOKEN_KEY)) {
+      storageSet(TOKEN_KEY, token);
+    }
+    return token;
   }
 
   function setToken(token) {
-    if (token) sessionStorage.setItem(TOKEN_KEY, token);
+    if (token) storageSet(TOKEN_KEY, token);
   }
 
   function clearSession() {
-    sessionStorage.removeItem(STORAGE_KEY);
-    sessionStorage.removeItem(TOKEN_KEY);
-    sessionStorage.removeItem(CONSENT_KEY);
-    sessionStorage.removeItem(OAUTH_STATE_KEY);
+    storageRemove(STORAGE_KEY);
+    storageRemove(TOKEN_KEY);
+    storageRemove(CONSENT_KEY);
+    storageRemove(OAUTH_STATE_KEY);
+  }
+
+  function requireAppSession() {
+    const session = getSession();
+    if (session) return session;
+    const loginPath = window.location.pathname.includes("/app/")
+      ? "../index.html#login"
+      : "index.html#login";
+    window.location.replace(loginPath);
+    return null;
   }
 
   function storeConsentFlags() {
@@ -110,7 +168,6 @@
     }
     const consent = storeConsentFlags();
     const csrf = crypto.randomUUID();
-    // CSRF UUID + consent payload so a future Worker can register server-side
     const state = `${csrf}.${b64urlJson({
       acceptedPrivacy: consent.acceptedPrivacy,
       acceptedTerms: consent.acceptedTerms,
@@ -195,20 +252,15 @@
     }
   }
 
-  function showRegisterStatus(result) {
-    const el = document.getElementById("register-status");
-    if (!el || !result) return;
-    el.hidden = false;
-    el.textContent = result.message || "";
-    el.classList.remove("is-success", "is-error", "is-skipped");
-    if (result.status === "success") el.classList.add("is-success");
-    else if (result.status === "error") el.classList.add("is-error");
-    else el.classList.add("is-skipped");
-  }
-
   function wireLoginForm() {
     const form = document.getElementById("login-form");
     if (!form) return;
+
+    const session = getSession();
+    if (session) {
+      window.location.replace("app/home.html");
+      return;
+    }
 
     const privacy = document.getElementById("accept-privacy");
     const terms = document.getElementById("accept-terms");
@@ -240,46 +292,34 @@
       }
     });
 
-    const session = getSession();
     const gate = document.getElementById("login-gate");
     const authed = document.getElementById("login-authed");
     if (!gate || !authed) return;
 
-    if (session) {
-      form.hidden = true;
-      gate.hidden = true;
-      authed.hidden = false;
-      const name = document.getElementById("authed-name");
-      const img = document.getElementById("authed-avatar");
-      if (name) name.textContent = session.global_name || session.username;
-      if (img) {
-        img.src = avatarUrl(session);
-        img.alt = session.username || "Avatar";
-      }
-      wireRailBrand();
-    } else {
-      form.hidden = false;
-      gate.hidden = false;
-      authed.hidden = true;
-    }
+    form.hidden = false;
+    gate.hidden = false;
+    authed.hidden = true;
+  }
+
+  function isAccountPage() {
+    return /account\.html$/i.test(window.location.pathname);
   }
 
   async function wireAccountPage() {
-    const status = document.getElementById("account-status");
-    const card = document.getElementById("account-card");
-    if (!status || !card) return;
+    if (!isAccountPage()) return;
 
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
     const state = params.get("state");
     const err = params.get("error");
 
-    if (err) {
-      status.textContent = `Login failed: ${err}`;
-      return;
-    }
-
     try {
+      if (err) {
+        clearSession();
+        window.location.replace(`index.html#login`);
+        return;
+      }
+
       if (token) {
         const expected = sessionStorage.getItem(OAUTH_STATE_KEY);
         const { csrf, consent: stateConsent } = parseOAuthState(state || "");
@@ -303,44 +343,24 @@
         const user = await verifyToken(token);
         setToken(token);
         setSession(user);
+        await registerWebAccount(token);
         history.replaceState({}, "", "account.html");
       }
 
-      const session = getSession();
-      if (!session) {
-        status.innerHTML = `Not signed in. <a href="index.html#login">Log in with Discord</a>.`;
-        return;
+      if (getSession()) {
+        window.location.replace("app/home.html");
+      } else {
+        window.location.replace("index.html#login");
       }
-
-      status.hidden = true;
-      card.hidden = false;
-      document.getElementById("account-name").textContent =
-        session.global_name || session.username;
-      document.getElementById("account-user").textContent = `@${session.username}`;
-      document.getElementById("account-id").textContent = session.id;
-      const img = document.getElementById("account-avatar");
-      img.src = avatarUrl(session);
-      img.alt = session.username;
-
-      wireRailBrand();
-
-      const sessionToken = getToken();
-      const registerResult = await registerWebAccount(sessionToken);
-      showRegisterStatus(registerResult);
-
-      document.getElementById("logout-btn")?.addEventListener("click", () => {
-        clearSession();
-        window.location.href = "index.html";
-      });
     } catch (e) {
       clearSession();
-      status.textContent = e.message || String(e);
+      window.location.replace("index.html#login");
     }
   }
 
   function wireRailBrand() {
     const session = getSession();
-    const target = session ? "account.html" : "index.html";
+    const target = session ? "app/home.html" : "index.html";
     const label = session ? "EarnCord dashboard" : "EarnCord home";
     document.querySelectorAll(".rail-brand").forEach((el) => {
       el.href = target;
@@ -352,15 +372,21 @@
     getSession,
     clearSession,
     avatarUrl,
+    markTourSeen,
+    hasTourSeen,
+    requireAppSession,
     wireLoginForm,
     wireAccountPage,
     wireRailBrand,
   };
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    wireRailBrand();
-    wireLoginForm();
-    await wireAccountPage();
-    wireRailBrand();
-  });
+  if (isAccountPage()) {
+    wireAccountPage();
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      wireRailBrand();
+      wireLoginForm();
+      wireRailBrand();
+    });
+  }
 })();

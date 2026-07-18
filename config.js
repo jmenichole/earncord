@@ -5,6 +5,7 @@ window.EARNCORD_CONFIG = {
   DISCORD_CLIENT_ID: "1527941049132122192",
   AUTH_BASE: "https://earncord-discord-oauth.j-chapman7.workers.dev",
   API_BASE: "https://earncord-api.fly.dev",
+  DISCORD_INVITE_URL: "",
   SITE_ORIGIN: "https://jmenichole.github.io",
   SITE_PATH: "/earncord",
 };
