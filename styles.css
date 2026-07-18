@@ -83,8 +83,8 @@ a:hover {
 
 .rail-brand {
   display: flex;
-  align-items: baseline;
-  gap: 0.15rem;
+  align-items: center;
+  gap: 0.55rem;
   padding: 0.35rem 0.45rem;
   color: var(--text);
   text-decoration: none;
@@ -92,6 +92,14 @@ a:hover {
   font-weight: 800;
   font-size: 1.15rem;
   letter-spacing: -0.04em;
+}
+
+.rail-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  flex-shrink: 0;
+  display: block;
 }
 
 .rail-brand:hover {
@@ -113,7 +121,8 @@ a:hover {
     font-size: 1rem;
   }
 
-  .rail-brand .full {
+  .rail-brand .full,
+  .rail-mark {
     display: none;
   }
 
