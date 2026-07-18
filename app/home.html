@@ -31,7 +31,16 @@
       </header>
 
       <main class="page-wrap hub-main">
-        <p class="account-status">Loading hub…</p>
+        <div id="tour-tip" class="hub-tour-tip" hidden>
+          <p class="hub-tour-copy"><strong>New to EarnCord?</strong> Take the 3-step tour — about a minute.</p>
+          <div class="hub-tour-actions">
+            <a class="btn btn-connect hub-tour-start" href="../docs/how-it-works.html">Start tour</a>
+            <button type="button" class="btn btn-ghost" data-tour-dismiss>Dismiss</button>
+          </div>
+        </div>
+        <p class="account-status" id="hub-loading">Loading hub…</p>
+        <div id="checklist" hidden></div>
+        <div id="dashboard" hidden></div>
       </main>
 
       <footer class="site-footer">
@@ -46,6 +55,7 @@
   <script src="../config.js"></script>
   <script src="../auth.js"></script>
   <script src="app.js"></script>
+  <script src="home.js"></script>
   <script>
     if (window.EarnCordAuth.requireAppSession()) {
       window.EarnCordAuth.wireRailBrand();
