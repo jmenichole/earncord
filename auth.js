@@ -117,6 +117,7 @@
         img.src = avatarUrl(session);
         img.alt = session.username || "Avatar";
       }
+      wireRailBrand();
     } else {
       form.hidden = false;
       gate.hidden = false;
@@ -167,6 +168,8 @@
       img.src = avatarUrl(session);
       img.alt = session.username;
 
+      wireRailBrand();
+
       document.getElementById("logout-btn")?.addEventListener("click", () => {
         clearSession();
         window.location.href = "index.html";
@@ -177,16 +180,29 @@
     }
   }
 
+  function wireRailBrand() {
+    const session = getSession();
+    const target = session ? "account.html" : "index.html";
+    const label = session ? "EarnCord dashboard" : "EarnCord home";
+    document.querySelectorAll(".rail-brand").forEach((el) => {
+      el.href = target;
+      el.setAttribute("aria-label", label);
+    });
+  }
+
   window.EarnCordAuth = {
     getSession,
     clearSession,
     avatarUrl,
     wireLoginForm,
     wireAccountPage,
+    wireRailBrand,
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", async () => {
+    wireRailBrand();
     wireLoginForm();
-    wireAccountPage();
+    await wireAccountPage();
+    wireRailBrand();
   });
 })();
