@@ -25,7 +25,7 @@ GitHub Pages (this repo)
   → Discord bot (SurveyScore) — /start, surveys, score, withdraw
 ```
 
-1. **Pages** — static marketing, consent gate, account UI (`index.html`, `account.html`, legal, `docs/`).
+1. **Pages** — static marketing, consent gate, signed-in hub (`index.html`, `app/*.html`, OAuth landing `account.html`, legal, `docs/`).
 2. **OAuth Worker** — exchanges Discord auth code; signs session tokens with `SESSION_SECRET`.
 3. **SurveyScore** — verifies sessions, stores users, receives survey S2S postbacks, runs the bot and payouts.
 
@@ -81,7 +81,44 @@ Commit and push — GitHub Pages updates in about a minute.
 
 1. Open https://jmenichole.github.io/earncord/#login
 2. Check Privacy, Terms, and 18+
-3. **Continue with Discord** → land on Account with your avatar
+3. **Continue with Discord** → OAuth Worker → `account.html` (token exchange) → redirect to **`app/home.html`**
+
+---
+
+## Signed-in hub (`app/`)
+
+After OAuth, users land in the app shell at **`app/home.html`**. Pages URL base: `https://jmenichole.github.io/earncord/app/`.
+
+| Page | Path | Purpose |
+|------|------|---------|
+| Home | `app/home.html` | Checklist until `/start` + wallet; then dashboard with balance and withdraw CTA |
+| History | `app/history.html` | Ledger activity via `GET /api/web/history` |
+| Payouts | `app/payouts.html` | Withdrawal request via `POST /api/web/withdraw` |
+| Profile | `app/profile.html` | Score, tier, linked status |
+| Settings | `app/settings.html` | TRC20 wallet via `PATCH /api/web/wallet` |
+
+Shared rail navigation and session guard live in `app/app.js` + `auth.js`. All hub pages require a stored session (`localStorage.earncord_session` + `earncord_token`); unauthenticated visitors are sent to `index.html#login`.
+
+### Login redirect flow
+
+```
+Logged out  → index.html (marketing + #login form)
+Logged in   → app/home.html (index.html and account.html both redirect here)
+Log out     → clears session keys → index.html#login
+Refresh     → session persists in localStorage until logout or token expiry
+```
+
+`account.html` is the OAuth callback landing only — it verifies the token, registers via `POST /api/web/register`, then immediately redirects to `app/home.html`.
+
+### Docs tour flag
+
+First-time hub visitors see a “New to EarnCord?” tip on Home linking to the docs tour.
+
+| Key | Storage | Behavior |
+|-----|---------|----------|
+| `earncord_tour_seen` | `localStorage` | Set to `"1"` when the user dismisses the tip or opens any docs tour page (`docs/how-it-works.html`, etc.) |
+
+To re-show the tip once: DevTools → Application → Local Storage → delete `earncord_tour_seen`, then hard-refresh `app/home.html`.
 
 ---
 
