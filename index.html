@@ -6,52 +6,59 @@
   <title>EarnCord — Discord survey rewards</title>
   <meta name="description" content="EarnCord matches Discord members to paid surveys and pays out in USDT." />
   <link rel="icon" type="image/png" href="earncord-logo.png" />
-  <link rel="apple-touch-icon" href="earncord-logo.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app-shell">
     <aside class="rail" aria-label="EarnCord">
       <a class="rail-brand" href="index.html">
-        <img src="earncord-logo.png" width="40" height="40" alt="" />
-        <span>EarnCord</span>
+        <span class="full">Earn<em>Cord</em></span>
+        <span class="short">E<em>C</em></span>
       </a>
       <nav class="rail-nav">
-        <a href="#login" aria-current="page"><span class="dot" aria-hidden="true"></span><span>Sign in</span></a>
-        <a href="privacy.html"><span class="dot" style="background:#6b7289;box-shadow:none" aria-hidden="true"></span><span>Privacy</span></a>
-        <a href="terms.html"><span class="dot" style="background:#6b7289;box-shadow:none" aria-hidden="true"></span><span>Terms</span></a>
+        <a href="#login" aria-current="page"><span class="hash">#</span><span class="label">sign-in</span></a>
+        <a href="privacy.html"><span class="hash">#</span><span class="label">privacy</span></a>
+        <a href="terms.html"><span class="hash">#</span><span class="label">terms</span></a>
       </nav>
-      <p class="rail-footer">Rewards for communities.<br />Not affiliated with Discord.</p>
+      <p class="rail-footer">Independent product.<br />Not affiliated with Discord.</p>
     </aside>
 
     <div class="workspace">
       <header class="topbar">
-        <div>
-          <h1># welcome</h1>
-          <p>Create your EarnCord account to unlock matched surveys</p>
-        </div>
+        <div class="topbar-title"><span class="hash">#</span> sign-in</div>
+        <div class="topbar-meta">18+ · server-verified rewards</div>
       </header>
 
       <main class="stage">
-        <section id="login" class="auth-panel" aria-label="Sign in">
-          <div class="auth-head">
-            <img src="earncord-logo.png" width="72" height="72" alt="EarnCord" />
-            <p class="eyebrow">Community rewards</p>
-            <h2>Join EarnCord</h2>
-            <p class="lede">Matched surveys. Verified completes. USDT payouts.</p>
-          </div>
+        <section class="pitch">
+          <p class="kicker">Discord-native rewards</p>
+          <h1>
+            Surveys that
+            <span>come to you.</span>
+          </h1>
+          <p class="lede">
+            EarnCord matches inventory to your profile, scores quality in public, and pays USDT when completes clear.
+          </p>
+          <ul class="pitch-points">
+            <li><strong>Match</strong><span>Profile + score, not endless offerwalls</span></li>
+            <li><strong>Verify</strong><span>Partner postbacks before balance credits</span></li>
+            <li><strong>Payout</strong><span>Withdraw in USDT when you’re ready</span></li>
+          </ul>
+        </section>
 
+        <section id="login" class="auth-panel" aria-label="Sign in">
           <div id="login-authed" class="login-authed" hidden>
-            <img id="authed-avatar" class="account-avatar" width="56" height="56" alt="" />
+            <img id="authed-avatar" class="account-avatar" width="48" height="48" alt="" />
             <div>
               <p class="login-hello">Signed in as <strong id="authed-name">Member</strong></p>
-              <p class="support"><a href="account.html">View account</a></p>
+              <p class="support"><a href="account.html">Open account</a></p>
             </div>
           </div>
 
           <form id="login-form">
             <div id="login-gate">
-              <p class="login-lead">Check each box to continue — partners require active consent.</p>
+              <h2>Create account</h2>
+              <p class="login-lead">Active consent required before surveys.</p>
 
               <label class="check">
                 <input type="checkbox" id="accept-privacy" name="privacy" value="1" />
@@ -63,7 +70,7 @@
               </label>
               <label class="check">
                 <input type="checkbox" id="accept-age" name="age" value="1" />
-                <span>I confirm I am 18 or older</span>
+                <span>I am 18 or older</span>
               </label>
 
               <button type="submit" id="discord-login" class="btn btn-connect" disabled>
@@ -75,28 +82,10 @@
         </section>
       </main>
 
-      <section class="how" aria-label="How it works">
-        <article>
-          <span class="step">Step 01</span>
-          <h3>Register</h3>
-          <p>Connect Discord and accept Privacy &amp; Terms on EarnCord.</p>
-        </article>
-        <article>
-          <span class="step">Step 02</span>
-          <h3>Match</h3>
-          <p>Quality score + profile decide which surveys you see.</p>
-        </article>
-        <article>
-          <span class="step">Step 03</span>
-          <h3>Get paid</h3>
-          <p>Server-verified completes credit your balance for USDT payouts.</p>
-        </article>
-      </section>
-
       <footer class="site-footer">
-        <p>Contact: <a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a></p>
+        <p><a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a></p>
         <p><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
-        <p class="fine">Must be 18+. EarnCord is an independent product and is not affiliated with, endorsed by, or sponsored by Discord Inc.</p>
+        <p>Not affiliated with, endorsed by, or sponsored by Discord Inc.</p>
       </footer>
     </div>
   </div>
