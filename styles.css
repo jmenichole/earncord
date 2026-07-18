@@ -1239,3 +1239,129 @@ a:hover {
 .hub-error {
   color: var(--danger);
 }
+
+/* Hub secondary pages */
+.hub-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.hub-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hub-amount {
+  color: var(--mint) !important;
+  font-family: var(--font-display);
+  font-size: 1rem !important;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.hub-amount.is-withdrawal {
+  color: #c5ccd8 !important;
+}
+
+.hub-empty {
+  text-align: center;
+  padding: 1.3rem;
+}
+
+.hub-form-card {
+  margin-bottom: 1.25rem;
+}
+
+.hub-section-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.hub-form-card > p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.hub-form-card form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.hub-form-card label {
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.hub-form-card input {
+  width: 100%;
+  padding: 0.72rem 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  outline: none;
+  background: var(--ink);
+  color: var(--text);
+  font: inherit;
+}
+
+.hub-form-card input:focus {
+  border-color: var(--mint);
+  box-shadow: 0 0 0 3px rgba(94, 242, 168, 0.12);
+}
+
+.hub-form-status {
+  min-height: 1.3rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.hub-form-status.is-success {
+  color: var(--mint);
+}
+
+.hub-form-status.is-error {
+  color: var(--danger);
+}
+
+.hub-legal-links {
+  margin: 1rem 0 0 !important;
+}
+
+.hub-profile-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.hub-profile-head strong {
+  margin-bottom: 0.1rem;
+}
+
+.hub-profile-avatar {
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+.hub-badge {
+  margin-left: auto;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.hub-badge.is-linked {
+  border-color: rgba(94, 242, 168, 0.35);
+  color: var(--mint);
+  background: rgba(94, 242, 168, 0.08);
+}
