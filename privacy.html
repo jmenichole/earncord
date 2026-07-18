@@ -9,18 +9,27 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <img class="brand-mark" src="earncord-logo.png" width="36" height="36" alt="" />
-      EarnCord
-    </a>
-    <nav>
-      <a href="privacy.html" aria-current="page">Privacy</a>
-      <a href="terms.html">Terms</a>
-    </nav>
-  </header>
-
-  <main class="legal">
+  <div class="app-shell">
+    <aside class="rail" aria-label="EarnCord">
+      <a class="rail-brand" href="index.html">
+        <img src="earncord-logo.png" width="40" height="40" alt="" />
+        <span>EarnCord</span>
+      </a>
+      <nav class="rail-nav">
+        <a href="index.html#login"><span class="dot" style="background:#6b7289;box-shadow:none" aria-hidden="true"></span><span>Sign in</span></a>
+        <a href="privacy.html" aria-current="page"><span class="dot" aria-hidden="true"></span><span>Privacy</span></a>
+        <a href="terms.html"><span class="dot" style="background:#6b7289;box-shadow:none" aria-hidden="true"></span><span>Terms</span></a>
+      </nav>
+      <p class="rail-footer">Not affiliated with Discord.</p>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <h1># privacy</h1>
+          <p>How EarnCord handles your data</p>
+        </div>
+      </header>
+  <main class="legal page-wrap">
     <h1>Privacy Policy</h1>
     <p class="meta">Last updated: July 18, 2026 · Contact: <a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a></p>
 
@@ -95,9 +104,11 @@
       Material changes will be noted in Discord or on this site when practical.
     </p>
   </main>
-
-  <footer class="site-footer">
-    <p><a href="index.html">Home</a> · <a href="terms.html">Terms of Service</a></p>
-  </footer>
+      <footer class="site-footer">
+        <p><a href="index.html">Home</a> · <a href="terms.html">Terms of Service</a></p>
+        <p class="fine">EarnCord is not affiliated with Discord Inc.</p>
+      </footer>
+    </div>
+  </div>
 </body>
 </html>

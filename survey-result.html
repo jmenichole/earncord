@@ -8,26 +8,35 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <img class="brand-mark" src="earncord-logo.png" width="36" height="36" alt="" />
-      EarnCord
-    </a>
-    <nav>
-      <a href="index.html#login">Login</a>
-      <a href="account.html">Account</a>
-    </nav>
-  </header>
-
-  <main class="account-main">
-    <p class="eyebrow" id="result-eyebrow">Survey</p>
-    <h1 id="result-title">Thanks</h1>
-    <p class="support" id="result-body">You can close this tab and return to Discord.</p>
-    <p class="account-meta" id="result-meta"></p>
-    <p style="margin-top: 1.5rem">
-      <a class="btn btn-discord" href="index.html" style="width: auto; display: inline-flex; padding-inline: 1.25rem">Back to EarnCord</a>
-    </p>
-  </main>
+  <div class="app-shell">
+    <aside class="rail" aria-label="EarnCord">
+      <a class="rail-brand" href="index.html">
+        <img src="earncord-logo.png" width="40" height="40" alt="" />
+        <span>EarnCord</span>
+      </a>
+      <nav class="rail-nav">
+        <a href="index.html#login"><span class="dot" aria-hidden="true"></span><span>Home</span></a>
+      </nav>
+      <p class="rail-footer">Not affiliated with Discord.</p>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <h1># survey-result</h1>
+          <p>Session finished</p>
+        </div>
+      </header>
+      <main class="page-wrap">
+        <p class="eyebrow" id="result-eyebrow" style="color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:.75rem;font-weight:700;margin:0 0 .5rem">Survey</p>
+        <h1 id="result-title" style="font-family:var(--font-display);margin:0 0 .75rem">Thanks</h1>
+        <p id="result-body" style="color:var(--muted);max-width:40ch">You can close this tab and return to Discord.</p>
+        <p class="account-meta" id="result-meta"></p>
+        <p style="margin-top: 1.5rem">
+          <a class="btn btn-connect" href="index.html" style="width: auto; display: inline-flex; padding-inline: 1.25rem">Back to EarnCord</a>
+        </p>
+      </main>
+    </div>
+  </div>
 
   <script>
     (function () {

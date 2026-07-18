@@ -8,8 +8,15 @@
   function getSession() {
     try {
       const raw = sessionStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : null;
+      if (!raw) return null;
+      const session = JSON.parse(raw);
+      if (!session || !session.id || !session.username) {
+        sessionStorage.removeItem(STORAGE_KEY);
+        return null;
+      }
+      return session;
     } catch {
+      sessionStorage.removeItem(STORAGE_KEY);
       return null;
     }
   }
@@ -97,16 +104,23 @@
     const session = getSession();
     const gate = document.getElementById("login-gate");
     const authed = document.getElementById("login-authed");
-    if (session && gate && authed) {
+    if (!gate || !authed) return;
+
+    if (session) {
+      form.hidden = true;
       gate.hidden = true;
       authed.hidden = false;
       const name = document.getElementById("authed-name");
       const img = document.getElementById("authed-avatar");
-      if (name) name.textContent = session.global_name || session.username || "Member";
+      if (name) name.textContent = session.global_name || session.username;
       if (img) {
         img.src = avatarUrl(session);
         img.alt = session.username || "Avatar";
       }
+    } else {
+      form.hidden = false;
+      gate.hidden = false;
+      authed.hidden = true;
     }
   }
 
