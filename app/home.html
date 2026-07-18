@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home — EarnCord</title>
+  <meta name="description" content="EarnCord hub dashboard." />
+  <link rel="icon" href="../mark.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="EarnCord">
+      <a class="rail-brand" href="home.html" aria-label="EarnCord dashboard">
+        <svg class="rail-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#0f121a"/>
+          <path fill="#e8ebf2" d="M9 8h9v3h-6v3h5v3h-5v3h6v3H9z"/>
+          <path fill="none" stroke="#5ef2a8" stroke-width="2.75" stroke-linecap="round" d="M19 8.5c5.2 0 8.5 3.2 8.5 7.5S24.2 23.5 19 23.5"/>
+        </svg>
+        <span class="full">Earn<em>Cord</em></span>
+        <span class="short">E<em>C</em></span>
+      </a>
+      <nav id="app-rail-nav" class="rail-nav" aria-label="App"></nav>
+      <p class="rail-footer">Independent product.<br />Not affiliated with Discord.</p>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-title"><span class="hash">#</span> home</div>
+        <div class="topbar-meta">hub dashboard</div>
+      </header>
+
+      <main class="page-wrap hub-main">
+        <p class="account-status">Loading hub…</p>
+      </main>
+
+      <footer class="site-footer">
+        <p class="footer-degen"><a href="https://github.com/jmenichole/Portfolio" target="_blank" rel="noopener">Made for degens, by degens ♥</a></p>
+        <p><a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a></p>
+        <p><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../docs/how-it-works.html">How it works</a></p>
+        <p>Not affiliated with, endorsed by, or sponsored by Discord Inc.</p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="../auth.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if (window.EarnCordAuth.requireAppSession()) {
+      window.EarnCordAuth.wireRailBrand();
+      window.EarnCordApp.renderAppRail("home");
+    }
+  </script>
+</body>
+</html>
