@@ -1,8 +1,10 @@
 // Fill DISCORD_CLIENT_ID after creating the Discord app.
 // Fill AUTH_BASE after deploying workers/discord-oauth (no trailing slash).
+// Set API_BASE to Railway PUBLIC_BASE_URL (no trailing slash), e.g. https://surveyscore-production.up.railway.app
 window.EARNCORD_CONFIG = {
   DISCORD_CLIENT_ID: "1527941049132122192",
   AUTH_BASE: "https://earncord-discord-oauth.j-chapman7.workers.dev",
+  API_BASE: "",
   SITE_ORIGIN: "https://jmenichole.github.io",
   SITE_PATH: "/earncord",
 };
