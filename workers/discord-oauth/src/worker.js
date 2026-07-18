@@ -18,6 +18,11 @@ function b64urlJson(obj) {
   return b64url(JSON.stringify(obj));
 }
 
+function fromB64url(s) {
+  const pad = s + "=".repeat((4 - (s.length % 4)) % 4);
+  return atob(pad.replace(/-/g, "+").replace(/_/g, "/"));
+}
+
 async function hmacSign(secret, message) {
   const key = await crypto.subtle.importKey(
     "raw",
@@ -43,11 +48,6 @@ async function createToken(secret, user) {
   return `${body}.${sig}`;
 }
 
-function fromB64url(s) {
-  const pad = s + "=".repeat((4 - (s.length % 4)) % 4);
-  return atob(pad.replace(/-/g, "+").replace(/_/g, "/"));
-}
-
 async function verifyToken(secret, token) {
   const [body, sig] = String(token || "").split(".");
   if (!body || !sig) return null;
@@ -58,11 +58,46 @@ async function verifyToken(secret, token) {
   return json;
 }
 
+async function createTurnstileTicket(secret) {
+  const payload = {
+    purpose: "turnstile",
+    exp: Math.floor(Date.now() / 1000) + 60 * 10,
+  };
+  const body = b64urlJson(payload);
+  const sig = await hmacSign(secret, body);
+  return `${body}.${sig}`;
+}
+
+async function verifyTurnstileTicket(secret, ticket) {
+  const claims = await verifyToken(secret, ticket);
+  if (!claims || claims.purpose !== "turnstile") return false;
+  return true;
+}
+
+async function siteverifyTurnstile(secret, response, ip) {
+  const body = new URLSearchParams({
+    secret,
+    response,
+  });
+  if (ip) body.set("remoteip", ip);
+  const res = await fetch(
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body,
+    },
+  );
+  if (!res.ok) return false;
+  const json = await res.json();
+  return json.success === true;
+}
+
 function corsHeaders(origin, allowed) {
   const ok = origin && origin === allowed;
   return {
     "Access-Control-Allow-Origin": ok ? origin : allowed,
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     Vary: "Origin",
   };
@@ -70,6 +105,21 @@ function corsHeaders(origin, allowed) {
 
 function redirect(url) {
   return Response.redirect(url, 302);
+}
+
+function parseOAuthState(state) {
+  if (!state) return { csrf: "", ticket: null };
+  const dot = state.indexOf(".");
+  if (dot === -1) return { csrf: state, ticket: null };
+  const csrf = state.slice(0, dot);
+  const encoded = state.slice(dot + 1);
+  if (!encoded) return { csrf, ticket: null };
+  try {
+    const json = JSON.parse(fromB64url(encoded));
+    return { csrf, ticket: json.ticket || null, consent: json };
+  } catch {
+    return { csrf, ticket: null };
+  }
 }
 
 export default {
@@ -86,7 +136,45 @@ export default {
     }
 
     if (url.pathname === "/" || url.pathname === "/health") {
-      return Response.json({ ok: true, service: "earncord-discord-oauth" }, { headers: cors });
+      return Response.json(
+        { ok: true, service: "earncord-discord-oauth" },
+        { headers: cors },
+      );
+    }
+
+    if (url.pathname === "/turnstile" && request.method === "POST") {
+      if (!env.TURNSTILE_SECRET || !env.SESSION_SECRET) {
+        return Response.json(
+          { error: "turnstile_not_configured" },
+          { status: 503, headers: cors },
+        );
+      }
+      let payload;
+      try {
+        payload = await request.json();
+      } catch {
+        return Response.json(
+          { error: "invalid_json" },
+          { status: 400, headers: cors },
+        );
+      }
+      const response = String(payload?.response || "");
+      if (!response) {
+        return Response.json(
+          { error: "missing_turnstile" },
+          { status: 400, headers: cors },
+        );
+      }
+      const ip = request.headers.get("CF-Connecting-IP") || "";
+      const ok = await siteverifyTurnstile(env.TURNSTILE_SECRET, response, ip);
+      if (!ok) {
+        return Response.json(
+          { error: "turnstile_failed" },
+          { status: 403, headers: cors },
+        );
+      }
+      const ticket = await createTurnstileTicket(env.SESSION_SECRET);
+      return Response.json({ ok: true, ticket }, { headers: cors });
     }
 
     if (url.pathname === "/callback") {
@@ -108,6 +196,16 @@ export default {
 
       if (!env.DISCORD_CLIENT_ID || !env.DISCORD_CLIENT_SECRET || !env.SESSION_SECRET) {
         return new Response("OAuth worker secrets not configured", { status: 500 });
+      }
+
+      const { ticket } = parseOAuthState(state);
+      if (env.TURNSTILE_SECRET) {
+        const ticketOk = ticket && (await verifyTurnstileTicket(env.SESSION_SECRET, ticket));
+        if (!ticketOk) {
+          const dest = new URL(successUrl);
+          dest.searchParams.set("error", "turnstile_required");
+          return redirect(dest.toString());
+        }
       }
 
       const redirectUri = `${url.origin}/callback`;

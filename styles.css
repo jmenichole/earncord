@@ -1099,6 +1099,17 @@ a:hover {
   color: var(--text);
 }
 
+.login-security {
+  margin: 0.85rem 0 0.65rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.cf-turnstile {
+  margin: 0 0 0.85rem;
+}
+
 .login-guide a {
   font-weight: 650;
 }

@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>For publishers — EarnCord</title>
-  <meta name="description" content="EarnCord partner / reviewer overview." />
+  <meta name="description" content="EarnCord TheoremReach / partner go-live brief." />
   <link rel="icon" href="../mark.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../styles.css" />
 </head>
@@ -26,38 +26,56 @@
     <div class="workspace">
       <header class="topbar">
         <div class="topbar-title"><span class="hash">#</span> publishers</div>
-        <div class="topbar-meta">reviewer brief</div>
+        <div class="topbar-meta">TheoremReach go-live brief</div>
       </header>
 
       <main class="docs-main page-wrap">
         <p class="docs-kicker">Partners</p>
         <h1>For publishers</h1>
-        <p class="docs-lede">Short brief for TheoremReach / CPX / Pollfish review.</p>
+        <p class="docs-lede">Reviewer brief mapped to TheoremReach Go Live requirements.</p>
 
         <div class="docs-blocks">
           <div class="docs-block">
-            <strong>What it is</strong>
-            <p>Discord-native panel. Web consent → bot matching → S2S postback credits → USDT out.</p>
+            <strong>Product</strong>
+            <p>EarnCord — Discord-native survey panel. Web consent → Discord bot matching → S2S postbacks → USDT (TRC20) withdrawals.</p>
           </div>
           <div class="docs-block">
-            <strong>URLs</strong>
+            <strong>Public URLs</strong>
             <p>
-              Site: <a href="https://jmenichole.github.io/earncord/">earncord/</a><br />
-              Privacy · Terms · <a href="how-it-works.html">How it works</a><br />
+              Site: <a href="https://jmenichole.github.io/earncord/">https://jmenichole.github.io/earncord/</a><br />
+              Privacy: <a href="../privacy.html">privacy.html</a> (GDPR / CCPA)<br />
+              Terms: <a href="../terms.html">terms.html</a><br />
+              How it works: <a href="how-it-works.html">docs/how-it-works.html</a><br />
               Contact: <a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a>
             </p>
           </div>
           <div class="docs-block">
-            <strong>Compliance</strong>
-            <p>18+ checkbox. Active Privacy + Terms. Discord OAuth identity. Quality via SurveyScore (0–1000).</p>
+            <strong>Go Live checklist</strong>
+            <p>
+              ✓ Working website<br />
+              ✓ GDPR/CCPA Privacy Policy + clear contact email<br />
+              ✓ Active consent checkboxes (Privacy, Terms, 18+) before Discord login<br />
+              ✓ Account required (Discord OAuth identify + web register + Discord <code>/start</code>)<br />
+              ✓ Captcha: Cloudflare Turnstile on signup (server-verified)<br />
+              ✓ Signup security: Discord OAuth identity + Turnstile<br />
+              ✓ In-app currency: credits (exchange rate <strong>100</strong> → 1 credit = $0.01) + ledger + USDT payouts
+            </p>
           </div>
           <div class="docs-block">
-            <strong>Postbacks</strong>
-            <p>Credits only from verified partner callbacks — never client “I finished” claims.</p>
+            <strong>TheoremReach callback</strong>
+            <p>
+              Reward callback (S2S):<br />
+              <code>https://earncord-api.fly.dev/postback/theoremreach</code><br />
+              Credits only after HMAC-verified partner callbacks — never client “I finished” claims.
+            </p>
+          </div>
+          <div class="docs-block">
+            <strong>Quality / fraud</strong>
+            <p>SurveyScore reputation 0–1000, screen-out weighting, server-side postbacks, optional delayed USDT withdraws (min + daily cap).</p>
           </div>
           <div class="docs-block">
             <strong>Stack</strong>
-            <p>GitHub Pages + CF Worker (OAuth). Node bot/API + Postgres on Fly.io (or similar). Not Discord Inc.</p>
+            <p>GitHub Pages + Cloudflare Worker (OAuth + Turnstile). Node API/bot + Postgres on Fly.io. Independent product — not Discord Inc.</p>
           </div>
         </div>
 

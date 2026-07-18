@@ -159,7 +159,29 @@
     return `https://cdn.discordapp.com/embed/avatars/${idx}.png`;
   }
 
-  function buildAuthorizeUrl() {
+  async function mintTurnstileTicket() {
+    const { AUTH_BASE, TURNSTILE_SITE_KEY } = cfg();
+    if (!TURNSTILE_SITE_KEY) return null;
+    const response =
+      document.querySelector('textarea[name="cf-turnstile-response"]')?.value ||
+      document.querySelector('input[name="cf-turnstile-response"]')?.value ||
+      "";
+    if (!response) {
+      throw new Error("Complete the security check before continuing.");
+    }
+    const res = await fetch(`${AUTH_BASE.replace(/\/$/, "")}/turnstile`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ response }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.ticket) {
+      throw new Error(data.error || "Security check failed. Try again.");
+    }
+    return data.ticket;
+  }
+
+  async function buildAuthorizeUrl() {
     const { DISCORD_CLIENT_ID, AUTH_BASE } = cfg();
     if (!DISCORD_CLIENT_ID || !AUTH_BASE) {
       throw new Error(
@@ -167,11 +189,13 @@
       );
     }
     const consent = storeConsentFlags();
+    const ticket = await mintTurnstileTicket();
     const csrf = crypto.randomUUID();
     const state = `${csrf}.${b64urlJson({
       acceptedPrivacy: consent.acceptedPrivacy,
       acceptedTerms: consent.acceptedTerms,
       acceptedAge: consent.acceptedAge,
+      ticket,
     })}`;
     sessionStorage.setItem(OAUTH_STATE_KEY, csrf);
     const redirectUri = `${AUTH_BASE.replace(/\/$/, "")}/callback`;
@@ -276,7 +300,7 @@
     [privacy, terms, age].forEach((el) => el.addEventListener("change", sync));
     sync();
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       error.hidden = true;
       if (!privacy.checked || !terms.checked || !age.checked) {
@@ -284,11 +308,13 @@
         error.hidden = false;
         return;
       }
+      button.disabled = true;
       try {
-        window.location.href = buildAuthorizeUrl();
+        window.location.href = await buildAuthorizeUrl();
       } catch (err) {
         error.textContent = err.message || String(err);
         error.hidden = false;
+        sync();
       }
     });
 

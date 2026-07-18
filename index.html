@@ -78,6 +78,16 @@
                 <span>I am 18 or older</span>
               </label>
 
+              <p class="login-security">
+                Security: Cloudflare Turnstile + Discord OAuth (account required).
+              </p>
+              <div
+                class="cf-turnstile"
+                data-sitekey="0x4AAAAAAD4cifPdn33CdSzI"
+                data-theme="dark"
+                data-size="flexible"
+              ></div>
+
               <button type="submit" id="discord-login" class="btn btn-connect" disabled>
                 <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.32 4.37A19.8 19.8 0 0 0 16.54 3c-.2.36-.43.85-.59 1.23a18.27 18.27 0 0 0-5.9 0C9.88 3.85 9.65 3.36 9.45 3a19.73 19.73 0 0 0-3.78 1.37A19.9 19.9 0 0 0 .12 16.44a19.94 19.94 0 0 0 6.08 3.08c.49-.67.93-1.38 1.31-2.12-.72-.27-1.41-.6-2.07-.99a8.2 8.2 0 0 0 1.15-.89c2.2 1.03 4.59 1.03 6.76 0 .38.35.75.68 1.15.89-.66.39-1.35.72-2.07.99.38.74.82 1.45 1.31 2.12a19.94 19.94 0 0 0 6.08-3.08 19.8 19.8 0 0 0-2.55-12.07ZM8.02 14.33c-1.18 0-2.16-1.08-2.16-2.41s.95-2.41 2.16-2.41 2.18 1.08 2.16 2.41-.95 2.41-2.16 2.41Zm7.96 0c-1.18 0-2.16-1.08-2.16-2.41s.95-2.41 2.16-2.41 2.18 1.08 2.16 2.41-.98 2.41-2.16 2.41Z"/></svg>
                 Continue with Discord
@@ -97,6 +107,7 @@
     </div>
   </div>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="config.js"></script>
   <script src="auth.js"></script>
 </body>
