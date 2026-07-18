@@ -134,6 +134,16 @@ a:hover {
   .rail-footer {
     display: none;
   }
+
+  .rail-nav a {
+    justify-content: center;
+    padding: 0.55rem;
+  }
+
+  .rail-nav .hash {
+    color: #c5ccd8;
+    font-size: 0.95rem;
+  }
 }
 
 .rail-nav {
@@ -147,9 +157,9 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.45rem 0.55rem;
+  padding: 0.5rem 0.6rem;
   border-radius: 6px;
-  color: var(--muted);
+  color: #c5ccd8;
   font-size: 0.88rem;
   font-weight: 500;
   text-decoration: none;
@@ -157,31 +167,38 @@ a:hover {
 }
 
 .rail-nav a:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.07);
   color: var(--text);
 }
 
 .rail-nav a[aria-current="page"] {
-  background: rgba(94, 242, 168, 0.1);
+  background: rgba(94, 242, 168, 0.14);
   color: var(--mint);
+  font-weight: 600;
 }
 
 .rail-nav .hash {
-  color: var(--muted);
+  color: #8f98ab;
   font-weight: 600;
-  opacity: 0.7;
+}
+
+.rail-nav a:hover .hash {
+  color: #a8b0c0;
 }
 
 .rail-nav a[aria-current="page"] .hash {
   color: var(--mint-dim);
 }
 
+.rail-nav .label {
+  color: inherit;
+}
+
 .rail-footer {
   font-size: 0.68rem;
   line-height: 1.4;
-  color: var(--muted);
+  color: #7a8499;
   padding: 0 0.45rem;
-  opacity: 0.85;
 }
 
 .workspace {
