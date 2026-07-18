@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Survey result — EarnCord</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">EarnCord</a>
+    <nav>
+      <a href="index.html#login">Login</a>
+      <a href="account.html">Account</a>
+    </nav>
+  </header>
+
+  <main class="account-main">
+    <p class="eyebrow" id="result-eyebrow">Survey</p>
+    <h1 id="result-title">Thanks</h1>
+    <p class="support" id="result-body">You can close this tab and return to Discord.</p>
+    <p class="account-meta" id="result-meta"></p>
+    <p style="margin-top: 1.5rem">
+      <a class="btn btn-discord" href="index.html" style="width: auto; display: inline-flex; padding-inline: 1.25rem">Back to EarnCord</a>
+    </p>
+  </main>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const status = (params.get("status") || "").toLowerCase();
+      const reward = params.get("reward");
+      const dollars = params.get("reward_amount_in_dollars");
+      const term = params.get("term_reason");
+      const partial = params.get("partial_reward") === "true";
+
+      const copy = {
+        success: {
+          eyebrow: partial ? "Partial reward" : "Complete",
+          title: partial ? "Partial credit earned" : "Survey complete",
+          body: "If the reward callback is live, credits will show in your EarnCord balance shortly.",
+        },
+        exit: {
+          eyebrow: "Ended",
+          title: "Survey ended",
+          body: "No reward for this session. You can try another survey when one matches.",
+        },
+        screenout: {
+          eyebrow: "Not a match",
+          title: "Screened out",
+          body: "This survey wasn’t a fit. That happens — your quality score still tracks completes vs screen-outs.",
+        },
+        quota: {
+          eyebrow: "Full",
+          title: "Survey full",
+          body: "This survey hit its quota. Check back for new matches.",
+        },
+        security: {
+          eyebrow: "Blocked",
+          title: "Session blocked",
+          body: "TheoremReach ended this session for a security or quality check. Contact support if this looks wrong.",
+        },
+      };
+
+      const key =
+        status === "success" || status === "done"
+          ? "success"
+          : status === "screenout" || status === "dq" || status === "disqualified"
+            ? "screenout"
+            : status === "quota"
+              ? "quota"
+              : status === "security"
+                ? "security"
+                : "exit";
+
+      const c = copy[key];
+      document.getElementById("result-eyebrow").textContent = c.eyebrow;
+      document.getElementById("result-title").textContent = c.title;
+      document.getElementById("result-body").textContent = c.body;
+
+      const bits = [];
+      if (reward) bits.push(`Reward: ${reward} credits`);
+      if (dollars) bits.push(`≈ $${dollars}`);
+      if (term) bits.push(`Reason: ${term}`);
+      document.getElementById("result-meta").textContent = bits.join(" · ");
+    })();
+  </script>
+</body>
+</html>
