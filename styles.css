@@ -466,6 +466,23 @@ a:hover {
   margin: 0;
 }
 
+.footer-degen {
+  width: 100%;
+  margin-bottom: 0.15rem !important;
+}
+
+.footer-degen a {
+  color: var(--mint-dim);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.footer-degen a:hover {
+  color: var(--mint);
+  text-decoration: underline;
+}
+
 .page-wrap {
   width: min(720px, calc(100% - 2.5rem));
   margin: 0 auto;
