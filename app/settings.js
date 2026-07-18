@@ -1,5 +1,9 @@
 (function () {
-  const walletPattern = /^T[A-Za-z0-9]{33}$/;
+  const walletPattern = /^T[1-9A-HJ-NP-Za-km-z]{33}$/;
+  const messages = {
+    invalid_wallet: "Enter a valid USDT TRC20 address (starts with T and is 34 characters).",
+    not_registered: "Register your EarnCord account before saving a wallet.",
+  };
 
   function status(message, kind = "") {
     const el = document.getElementById("wallet-status");
@@ -21,7 +25,7 @@
       event.preventDefault();
       const wallet = input.value.trim();
       if (!walletPattern.test(wallet)) {
-        status("Enter a valid USDT TRC20 address (starts with T and is 34 characters).", "is-error");
+        status(messages.invalid_wallet, "is-error");
         return;
       }
       status("Saving…");
@@ -29,7 +33,7 @@
         const res = await window.EarnCordApp.apiFetch("/api/web/wallet", { method: "PATCH", body: JSON.stringify({ wallet }) });
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));
-          throw new Error(body.error || body.message || "Could not save wallet.");
+          throw new Error(messages[body.error || body.code] || body.message || "Could not save wallet.");
         }
         status("Wallet saved.", "is-success");
       } catch (error) {

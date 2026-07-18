@@ -13,7 +13,7 @@
   function render(items) {
     const list = document.getElementById("history-list");
     if (!items.length) {
-      list.innerHTML = '<div class="docs-block hub-empty"><strong>No activity yet</strong><p>No activity yet — matches show up in Discord.</p></div>';
+      list.innerHTML = '<div class="docs-block hub-empty"><p>No activity yet — matches show up in Discord.</p></div>';
     } else {
       list.innerHTML = items.map((item) => {
         const kind = item.kind || item.type || "activity";
