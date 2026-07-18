@@ -11,6 +11,7 @@
   <header class="site-header">
     <a class="brand" href="index.html">EarnCord</a>
     <nav>
+      <a href="#login">Login</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
     </nav>
@@ -18,25 +19,64 @@
 
   <main>
     <section class="hero">
-      <p class="eyebrow">Discord rewards bot</p>
+      <p class="eyebrow">Discord rewards</p>
       <h1>EarnCord</h1>
       <p class="lede">
         Matched surveys in Discord. Verified completes. USDT payouts.
       </p>
       <p class="support">
-        Join a supported server, run <code>/start</code>, accept Privacy &amp; Terms,
-        then get DMs when surveys match your profile.
+        Create your account with Discord below. You’ll need to actively accept our
+        Privacy Policy and Terms before surveys (required by our research partners).
       </p>
+    </section>
+
+    <section id="login" class="login-section" aria-label="Sign in">
+      <div id="login-authed" class="login-authed" hidden>
+        <img id="authed-avatar" class="account-avatar" width="56" height="56" alt="" />
+        <div>
+          <p class="login-hello">Signed in as <strong id="authed-name">Member</strong></p>
+          <p class="support"><a href="account.html">View account</a></p>
+        </div>
+      </div>
+
+      <form id="login-form" class="login-card">
+        <div id="login-gate">
+          <h2>Create account</h2>
+          <p class="login-lead">Active consent is required. Unchecked boxes stay off until you click them.</p>
+
+          <label class="check">
+            <input type="checkbox" id="accept-privacy" name="privacy" value="1" />
+            <span>I have read and agree to the <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a></span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="accept-terms" name="terms" value="1" />
+            <span>I have read and agree to the <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a></span>
+          </label>
+          <label class="check">
+            <input type="checkbox" id="accept-age" name="age" value="1" />
+            <span>I confirm I am 18 years of age or older</span>
+          </label>
+
+          <button type="submit" id="discord-login" class="btn btn-discord" disabled>
+            Log in with Discord
+          </button>
+          <p id="login-error" class="login-error" hidden></p>
+          <p class="login-hint">
+            Setup incomplete? Add your Discord Client ID and auth Worker URL in
+            <code>config.js</code> — see the README.
+          </p>
+        </div>
+      </form>
     </section>
 
     <section class="steps" aria-label="How it works">
       <article>
         <h2>1. Register</h2>
-        <p>Link Discord, set your profile, and actively accept our Privacy Policy and Terms.</p>
+        <p>Log in with Discord and accept Privacy &amp; Terms on this site.</p>
       </article>
       <article>
         <h2>2. Match</h2>
-        <p>EarnCord scores quality and DMs you when a survey fits — no endless offerwall scrolling.</p>
+        <p>EarnCord scores quality and surfaces surveys that fit your profile.</p>
       </article>
       <article>
         <h2>3. Get paid</h2>
@@ -50,5 +90,8 @@
     <p><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></p>
     <p class="fine">Must be 18+. Survey availability and rewards are not guaranteed.</p>
   </footer>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
 </body>
 </html>

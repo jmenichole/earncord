@@ -1,0 +1,13 @@
+name = "earncord-discord-oauth"
+main = "src/worker.js"
+compatibility_date = "2026-07-01"
+
+# Set secrets (do not commit values):
+#   npx wrangler secret put DISCORD_CLIENT_ID
+#   npx wrangler secret put DISCORD_CLIENT_SECRET
+#   npx wrangler secret put SESSION_SECRET
+#
+# Optional vars below — override with `wrangler.toml` [vars] or dashboard:
+[vars]
+SITE_SUCCESS_URL = "https://jmenichole.github.io/earncord/account.html"
+ALLOWED_ORIGIN = "https://jmenichole.github.io"

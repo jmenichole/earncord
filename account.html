@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Account — EarnCord</title>
+  <meta name="description" content="Your EarnCord Discord account." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">EarnCord</a>
+    <nav>
+      <a href="index.html#login">Login</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </nav>
+  </header>
+
+  <main class="account-main">
+    <h1>Account</h1>
+    <p id="account-status" class="account-status">Checking session…</p>
+
+    <div id="account-card" class="account-card" hidden>
+      <img id="account-avatar" class="account-avatar" width="72" height="72" alt="" />
+      <div>
+        <p id="account-name" class="account-name"></p>
+        <p id="account-user" class="account-meta"></p>
+        <p class="account-meta">Discord ID: <code id="account-id"></code></p>
+      </div>
+      <button type="button" id="logout-btn" class="btn btn-ghost">Log out</button>
+      <p class="account-note">
+        You’re signed in on the web. Discord bot commands come next — same Discord account will link automatically.
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p><a href="index.html">Home</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
