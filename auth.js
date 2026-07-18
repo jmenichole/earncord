@@ -360,7 +360,15 @@
 
   function wireRailBrand() {
     const session = getSession();
-    const target = session ? "app/home.html" : "index.html";
+    const inApp = /\/app\//.test(window.location.pathname);
+    // Relative paths differ on marketing pages vs /app/* hub pages.
+    const target = session
+      ? inApp
+        ? "home.html"
+        : "app/home.html"
+      : inApp
+        ? "../index.html"
+        : "index.html";
     const label = session ? "EarnCord dashboard" : "EarnCord home";
     document.querySelectorAll(".rail-brand").forEach((el) => {
       el.href = target;
