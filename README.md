@@ -69,7 +69,7 @@ Edit `config.js` on `main`:
 window.EARNCORD_CONFIG = {
   DISCORD_CLIENT_ID: "YOUR_CLIENT_ID",
   AUTH_BASE: "https://earncord-discord-oauth.xxx.workers.dev",
-  API_BASE: "https://YOUR-SURVEYSCORE-HOST",  // Railway PUBLIC_BASE_URL, no trailing slash
+  API_BASE: "https://YOUR-SURVEYSCORE-HOST",  // Fly.io PUBLIC_BASE_URL, no trailing slash
   SITE_ORIGIN: "https://jmenichole.github.io",
   SITE_PATH: "/earncord",
 };
@@ -85,13 +85,17 @@ Commit and push — GitHub Pages updates in about a minute.
 
 ---
 
-## SurveyScore (bot, Railway, postbacks)
+## SurveyScore (bot + API)
 
-Deploy API, Discord bot, DB migrations, CPX/TheoremReach callbacks, and NOWPayments from:
+**Recommended host: [Fly.io](https://fly.io)** — one Node process (Express + discord.js gateway) + Postgres.
+
+Cloudflare Workers are great for the OAuth Worker in this repo, but **cannot** run the discord.js gateway bot. Keep OAuth on Workers; put SurveyScore on Fly.
+
+Deploy API, Discord bot, DB migrations, TheoremReach/CPX callbacks, and NOWPayments from:
 
 **https://github.com/jmenichole/surveyscore**
 
-That README is the canonical operator guide (env vars, `SESSION_SECRET`, web register, migrations).
+That README is the canonical operator guide (`fly launch`, env vars, `SESSION_SECRET`, webhooks).
 
 ---
 

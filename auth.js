@@ -141,7 +141,7 @@
     const { API_BASE } = cfg();
     const base = (API_BASE || "").replace(/\/$/, "");
     if (!base) {
-      return { status: "skipped", message: "Set API_BASE in config.js to your Railway PUBLIC_BASE_URL to finish web registration." };
+      return { status: "skipped", message: "API not connected yet. After Fly deploy, set API_BASE in config.js to your PUBLIC_BASE_URL (no trailing slash)." };
     }
     if (!token) {
       return { status: "error", message: "Missing session token for web registration. Please log in again." };

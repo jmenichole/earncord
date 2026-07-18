@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FAQ — EarnCord Docs</title>
-  <meta name="description" content="EarnCord FAQ: payouts, screen-outs, Discord affiliation, contact." />
+  <title>FAQ — EarnCord</title>
+  <meta name="description" content="Short EarnCord FAQ." />
   <link rel="icon" href="../mark.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="../earncord-mark-1024.png" />
   <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
@@ -21,103 +20,58 @@
         <span class="full">Earn<em>Cord</em></span>
         <span class="short">E<em>C</em></span>
       </a>
-      <nav class="rail-nav">
-        <a href="../index.html"><span class="hash">#</span><span class="label">home</span></a>
-        <a href="index.html"><span class="hash">#</span><span class="label">docs</span></a>
-      </nav>
       <p class="rail-footer">Independent product.<br />Not affiliated with Discord.</p>
     </aside>
 
     <div class="workspace">
       <header class="topbar">
-        <div class="topbar-title"><span class="hash">#</span> docs / faq</div>
-        <div class="topbar-meta">short answers</div>
+        <div class="topbar-title"><span class="hash">#</span> faq</div>
+        <div class="topbar-meta">step 3 of 3</div>
       </header>
 
-      <nav class="docs-toc" aria-label="Docs pages">
-        <a href="index.html">Hub</a>
-        <a href="how-it-works.html">How it works</a>
-        <a href="surveyscore.html">SurveyScore</a>
-        <a href="for-publishers.html">For publishers</a>
-        <a href="faq.html" aria-current="page">FAQ</a>
+      <nav class="guide-bar" aria-label="Guided tour">
+        <a class="guide-step" href="how-it-works.html"><span class="guide-num">1</span> How it works</a>
+        <a class="guide-step" href="surveyscore.html"><span class="guide-num">2</span> Your score</a>
+        <a class="guide-step" href="faq.html" aria-current="page"><span class="guide-num">3</span> FAQ</a>
       </nav>
 
       <main class="docs-main page-wrap">
         <p class="docs-kicker">FAQ</p>
-        <h1>Common questions</h1>
-        <p class="docs-lede">Straight answers. No earnings guarantees.</p>
+        <h1>Quick answers</h1>
+        <p class="docs-lede">You’re done with the tour after this.</p>
 
-        <div class="docs-faq">
-          <section>
-            <h2>How do payouts work?</h2>
-            <p>
-              Verified survey completes credit your EarnCord balance. When you meet the minimum
-              withdrawal and stay under daily caps, you can withdraw in USDT to a wallet you control.
-              Processing depends on the payment provider and network — not on Discord.
-            </p>
-          </section>
-
-          <section>
-            <h2>Why didn’t I get paid for a survey?</h2>
-            <p>
-              Common reasons: you were screened out, the session didn’t complete on the partner side,
-              or the postback hasn’t arrived yet. EarnCord credits from partner callbacks, not from
-              closing the browser tab. Screen-outs never pay.
-            </p>
-          </section>
-
-          <section>
-            <h2>What is a screen-out?</h2>
-            <p>
-              The survey partner decided you weren’t a fit (demographics, quotas, or quality checks).
-              No reward. Repeated screen-outs can lower your <a href="surveyscore.html">SurveyScore</a>.
-            </p>
-          </section>
-
-          <section>
-            <h2>Is EarnCord part of Discord?</h2>
-            <p>
-              No. EarnCord is an independent product that uses Discord’s APIs and OAuth.
-              It is not affiliated with, endorsed by, or sponsored by Discord Inc.
-            </p>
-          </section>
-
-          <section>
-            <h2>Do I have to use the website and the bot?</h2>
-            <p>
-              Yes for a full account: the website captures Privacy / Terms / 18+ consent and Discord login;
-              the bot handles <code>/start</code>, matching, and day-to-day commands. See
-              <a href="how-it-works.html">How it works</a>.
-            </p>
-          </section>
-
-          <section>
-            <h2>How do I raise my score?</h2>
-            <p>
-              Complete your profile, finish surveys you qualify for, keep screen-outs down, and stay
-              active over time. Details and tier cutoffs are on the
-              <a href="surveyscore.html">SurveyScore</a> page.
-            </p>
-          </section>
-
-          <section>
-            <h2>Who do I contact?</h2>
-            <p>
-              Email <a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a>.
-              For privacy or terms questions, start with
-              <a href="../privacy.html">Privacy</a> and <a href="../terms.html">Terms</a>.
-            </p>
-          </section>
+        <div class="docs-blocks">
+          <div class="docs-block">
+            <strong>When do I get paid?</strong>
+            <p>After the survey partner’s server confirms a complete — then you withdraw USDT.</p>
+          </div>
+          <div class="docs-block">
+            <strong>Why $0 on a survey?</strong>
+            <p>Screen-out, incomplete, or callback not in yet. Closing the tab doesn’t credit you.</p>
+          </div>
+          <div class="docs-block">
+            <strong>Site + bot?</strong>
+            <p>Yes. Web = consent + login. Discord = <code>/start</code>, matches, balance.</p>
+          </div>
+          <div class="docs-block">
+            <strong>Part of Discord?</strong>
+            <p>No. Independent product. Not affiliated with Discord Inc.</p>
+          </div>
+          <div class="docs-block">
+            <strong>Contact</strong>
+            <p><a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a></p>
+          </div>
         </div>
 
-        <p class="docs-next"><a href="index.html">← Back to docs hub</a></p>
+        <p class="docs-next">
+          <a href="surveyscore.html">← Back</a>
+          <a class="btn btn-connect" href="../index.html#login">Create account →</a>
+        </p>
       </main>
 
       <footer class="site-footer">
         <p class="footer-degen"><a href="https://github.com/jmenichole/Portfolio" target="_blank" rel="noopener">Made for degens, by degens ♥</a></p>
-        <p><a href="mailto:jmenichole007@outlook.com">jmenichole007@outlook.com</a></p>
-        <p><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="index.html">Docs</a></p>
-        <p>Not affiliated with, endorsed by, or sponsored by Discord Inc.</p>
+        <p><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="for-publishers.html">Publishers</a></p>
       </footer>
     </div>
   </div>
