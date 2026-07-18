@@ -1,0 +1,5 @@
+.dev.vars
+workers/**/.dev.vars
+.tmp-secret.txt
+.wrangler/
+node_modules/
